@@ -148,6 +148,7 @@ echo "SYSTEM=NORMAL" >> tests/system.prio
            --with-system-priority-file=%{_sysconfdir}/crypto-policies/back-ends/gnutls.config \
            --with-default-trust-store-pkcs11="pkcs11:model=p11-kit-trust;manufacturer=PKCS%2311%20Kit" \
            --with-trousers-lib=%{_libdir}/libtspi.so.1 \
+           --htmldir=%{_docdir}/manual \
 %if %{with guile}
            --enable-guile \
 %else
@@ -166,6 +167,7 @@ make %{?_smp_mflags} V=1
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
+make -C doc install-html DESTDIR=$RPM_BUILD_ROOT
 rm -f $RPM_BUILD_ROOT%{_bindir}/srptool
 rm -f $RPM_BUILD_ROOT%{_mandir}/man1/srptool.1
 rm -f $RPM_BUILD_ROOT%{_mandir}/man3/*srp*
@@ -230,6 +232,7 @@ fi
 %{_mandir}/man3/*
 %{_infodir}/gnutls*
 %{_infodir}/pkcs11-vision*
+%{_docdir}/manual/*
 
 %files utils
 %defattr(-,root,root,-)
