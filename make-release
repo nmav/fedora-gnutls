@@ -67,7 +67,9 @@ RELEASE_SRPM=$(ls $RELEASE_SRPM_DIR/$PACKAGE-*.src.rpm)
 # Do fedora builds for the tag, using tarball
 $SCRIPTS_DIR/release-koji -v -p $RELEASE_SRPM master
 $SCRIPTS_DIR/release-koji -v -p $RELEASE_SRPM f25
+$SCRIPTS_DIR/release-koji -v -p $RELEASE_SRPM f26
 
 export RELEASE_SRPM
 $SCRIPTS_DIR/release-bodhi f25
+$SCRIPTS_DIR/release-bodhi f26
 
