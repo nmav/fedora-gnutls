@@ -16,6 +16,8 @@ BuildRequires: trousers-devel >= 0.3.11.2
 BuildRequires: libidn2-devel
 BuildRequires: libunistring-devel
 BuildRequires: gperf, net-tools, datefudge, softhsm
+# for a sanity check on cert loading
+BuildRequires: p11-kit-trust, ca-certificates
 Requires: crypto-policies
 Requires: p11-kit-trust
 Requires: libtasn1 >= 4.3
@@ -133,6 +135,7 @@ This package contains Guile bindings for the library.
 
 sed 's/gnutls_srp.c//g' -i lib/Makefile.in
 sed 's/gnutls_srp.lo//g' -i lib/Makefile.in
+sed 's/global_init/gnutls_global_init/g' -i tests/trust-store.c
 sed -i -e 's|sys_lib_dlsearch_path_spec="/lib /usr/lib|sys_lib_dlsearch_path_spec="/lib /usr/lib %{_libdir}|g' configure
 rm -f lib/minitasn1/*.c lib/minitasn1/*.h
 rm -f src/libopts/*.c src/libopts/*.h src/libopts/compat/*.c src/libopts/compat/*.h 
@@ -146,7 +149,7 @@ echo "SYSTEM=NORMAL" >> tests/system.prio
            --disable-srp-authentication \
            --disable-non-suiteb-curves \
            --with-system-priority-file=%{_sysconfdir}/crypto-policies/back-ends/gnutls.config \
-           --with-default-trust-store-pkcs11="pkcs11:model=p11-kit-trust;manufacturer=PKCS%2311%20Kit" \
+           --with-default-trust-store-pkcs11="pkcs11:" \
            --with-trousers-lib=%{_libdir}/libtspi.so.1 \
            --htmldir=%{_docdir}/manual \
 %if %{with guile}
