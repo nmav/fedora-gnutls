@@ -19,7 +19,7 @@ BuildRequires: gperf, net-tools, datefudge, softhsm
 # for a sanity check on cert loading
 BuildRequires: p11-kit-trust, ca-certificates
 Requires: crypto-policies
-Requires: p11-kit-trust%{?_isa}
+Requires: p11-kit-trust
 Requires: libtasn1 >= 4.3
 Recommends: trousers >= 0.3.11.2
 
