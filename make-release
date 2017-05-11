@@ -16,7 +16,7 @@ RELEASE_SRPM_DIR=$PWD/_release/srpm
 RELEASE_SOURCE=$PWD/_release/source
 RELEASE_DEBIAN_REPO=$PWD/_release/debian-apt
 TOOLS_DIR=$PWD
-SCRIPTS_DIR=/home/nmavrogi/cvs/cockpituous-mine/release
+SCRIPTS_DIR=/home/nmavrogi/cvs/cockpituous/release
 
 #rm -rf $RELEASE_SOURCE
 mkdir -p $RELEASE_SOURCE
@@ -33,19 +33,8 @@ fi
 
 gpg --verify $PACKAGE-$VERSION.tar.xz.sig
 
+cp $TOOLS_DIR/files/* . || true
 cp $TOOLS_DIR/patches/*.patch .
-
-if ! test -f $PACKAGE-$VERSION-hobbled.tar.xz;then
-	test -d "$PACKAGE-$VERSION" && rm -rf "$PACKAGE-$VERSION"
-	tar xf $PACKAGE-$VERSION.tar.xz
-	pushd "$PACKAGE-$VERSION"
-	$TOOLS_DIR/hobble-gnutls -e
-	popd
-
-	rm -f "$PACKAGE-$VERSION-hobbled.tar" "$PACKAGE-$VERSION-hobbled.tar.xz" || true
-	tar cf $PACKAGE-$VERSION-hobbled.tar "$PACKAGE-$VERSION"
-	xz $PACKAGE-$VERSION-hobbled.tar
-fi
 
 popd
 
@@ -58,7 +47,7 @@ export RELEASE_SOURCE
 export RELEASE_TAG="$VERSION"
 export RELEASE_SPEC
 export RELEASE_PATCH=1
-export RELEASE_TARBALL="$RELEASE_SOURCE/$PACKAGE-$VERSION-hobbled.tar.xz"
+export RELEASE_TARBALL="$RELEASE_SOURCE/$PACKAGE-$VERSION.tar.xz"
 $SCRIPTS_DIR/release-srpm -p
 popd
 
@@ -66,10 +55,10 @@ RELEASE_SRPM=$(ls $RELEASE_SRPM_DIR/$PACKAGE-*.src.rpm)
 
 # Do fedora builds for the tag, using tarball
 $SCRIPTS_DIR/release-koji -v -p $RELEASE_SRPM master
-$SCRIPTS_DIR/release-koji -v -p $RELEASE_SRPM f25
 $SCRIPTS_DIR/release-koji -v -p $RELEASE_SRPM f26
+$SCRIPTS_DIR/release-koji -v -p $RELEASE_SRPM f25
 
 export RELEASE_SRPM
-$SCRIPTS_DIR/release-bodhi f25
 $SCRIPTS_DIR/release-bodhi f26
+$SCRIPTS_DIR/release-bodhi f25
 
