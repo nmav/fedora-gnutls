@@ -24,11 +24,11 @@ mkdir -p $RELEASE_SOURCE
 pushd $RELEASE_SOURCE
 
 if ! test -f "$PACKAGE-$VERSION.tar.xz";then
-	wget ftp://ftp.gnutls.org/gcrypt/gnutls/v3.5/$PACKAGE-$VERSION.tar.xz
+	wget ftp://ftp.gnutls.org/gcrypt/gnutls/v3.6/$PACKAGE-$VERSION.tar.xz
 fi
 
 if ! test -f "$PACKAGE-$VERSION.tar.xz.sig";then
-	wget ftp://ftp.gnutls.org/gcrypt/gnutls/v3.5/$PACKAGE-$VERSION.tar.xz.sig
+	wget ftp://ftp.gnutls.org/gcrypt/gnutls/v3.6/$PACKAGE-$VERSION.tar.xz.sig
 fi
 
 gpg --verify $PACKAGE-$VERSION.tar.xz.sig
@@ -55,10 +55,10 @@ RELEASE_SRPM=$(ls $RELEASE_SRPM_DIR/$PACKAGE-*.src.rpm)
 
 # Do fedora builds for the tag, using tarball
 $SCRIPTS_DIR/release-koji -v -p $RELEASE_SRPM master
-$SCRIPTS_DIR/release-koji -v -p $RELEASE_SRPM f26
-$SCRIPTS_DIR/release-koji -v -p $RELEASE_SRPM f25
+#$SCRIPTS_DIR/release-koji -v -p $RELEASE_SRPM f26
+#$SCRIPTS_DIR/release-koji -v -p $RELEASE_SRPM f25
 
-export RELEASE_SRPM
-$SCRIPTS_DIR/release-bodhi f26
-$SCRIPTS_DIR/release-bodhi f25
+#export RELEASE_SRPM
+#$SCRIPTS_DIR/release-bodhi f26
+#$SCRIPTS_DIR/release-bodhi f25
 
