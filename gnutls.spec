@@ -4,7 +4,7 @@
 %bcond_with fips
 %else
 %bcond_without guile
-%bcond_without fips
+%bcond_with fips
 %endif
 
 Summary: A TLS protocol implementation
