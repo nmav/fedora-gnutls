@@ -23,6 +23,7 @@ BuildRequires: trousers-devel >= 0.3.11.2
 BuildRequires: libidn2-devel
 BuildRequires: libunistring-devel
 BuildRequires: gperf, net-tools, datefudge, softhsm
+BuildRequires: gnupg2
 %if %{with fips}
 BuildRequires: fipscheck
 %endif
