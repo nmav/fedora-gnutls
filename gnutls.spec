@@ -1,10 +1,10 @@
 %bcond_without dane
 %if 0%{?rhel}
 %bcond_with guile
-%bcond_with fips
+%bcond_without fips
 %else
 %bcond_without guile
-%bcond_with fips
+%bcond_without fips
 %endif
 
 Summary: A TLS protocol implementation
@@ -185,8 +185,8 @@ make %{?_smp_mflags} V=1
 	%{?__debug_package:%{__debug_install_post}} \
 	%{__arch_install_post} \
 	%{__os_install_post} \
-	fipshmac -d $RPM_BUILD_ROOT%{_libdir} $RPM_BUILD_ROOT%{_libdir}/libgnutls.so.28.*.* \
-	file=`basename $RPM_BUILD_ROOT%{_libdir}/libgnutls.so.28.*.hmac` && mv $RPM_BUILD_ROOT%{_libdir}/$file $RPM_BUILD_ROOT%{_libdir}/.$file && ln -s .$file $RPM_BUILD_ROOT%{_libdir}/.libgnutls.so.28.hmac \
+	fipshmac -d $RPM_BUILD_ROOT%{_libdir} $RPM_BUILD_ROOT%{_libdir}/libgnutls.so.30.*.* \
+	file=`basename $RPM_BUILD_ROOT%{_libdir}/libgnutls.so.30.*.hmac` && mv $RPM_BUILD_ROOT%{_libdir}/$file $RPM_BUILD_ROOT%{_libdir}/.$file && ln -s .$file $RPM_BUILD_ROOT%{_libdir}/.libgnutls.so.30.hmac \
 %{nil}
 %endif
 
